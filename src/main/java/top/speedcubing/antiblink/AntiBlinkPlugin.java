@@ -3,7 +3,7 @@ package top.speedcubing.antiblink;
 import org.bukkit.plugin.java.JavaPlugin;
 import top.speedcubing.lib.eventbus.CubingEventManager;
 
-public class BlinkGuardPlugin extends JavaPlugin {
+public class AntiBlinkPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {

@@ -1,11 +1,7 @@
-name: BlinkGuard
+name: AntiBlink
 version: 1.0.0
-main: top.speedcubing.blinkguard.BlinkGuardPlugin
-api-version: 1.8
-author: nontage
-description: Counter Blink via S08 correction
+main: top.speedcubing.antiblink.AntiBlinkPlugin
 commands:
   acblink:
-    description: BlinkGuard admin command
     usage: /acblink <reload|set|status>
     permission: blinkguard.admin
