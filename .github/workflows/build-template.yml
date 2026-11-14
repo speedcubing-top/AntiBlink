@@ -39,12 +39,12 @@ jobs:
             xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
             <servers>
               <server>
-                <id>speedcubing-private-projects-release</id>
+                <id>speedcubing-public-projects-release</id>
                 <username>${{ secrets.NEXUS_USERNAME }}</username>
                 <password>${{ secrets.NEXUS_PASSWORD }}</password>
               </server>
               <server>
-                <id>speedcubing-private-projects-snapshot</id>
+                <id>speedcubing-public-projects-snapshot</id>
                 <username>${{ secrets.NEXUS_USERNAME }}</username>
                 <password>${{ secrets.NEXUS_PASSWORD }}</password>
               </server>
