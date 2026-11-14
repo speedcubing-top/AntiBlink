@@ -1,0 +1,7 @@
+enabled: true
+burst-gap-ms: 20
+burst-count: 3
+block-action-ms: 500
+op-bypass: true
+staff-alert: true
+debug: false
