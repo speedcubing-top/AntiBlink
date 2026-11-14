@@ -1,14 +1,13 @@
-package top.nontage.blinkGuard;
+package top.speedcubing.antiblink;
 
-import com.github.retrooper.packetevents.PacketEvents;
-import com.github.retrooper.packetevents.protocol.world.Location;
-import com.github.retrooper.packetevents.util.Vector3d;
-import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientPlayerFlying;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerPositionAndLook;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
+import net.minecraft.server.v1_8_R3.PacketPlayInFlying;
+import net.minecraft.server.v1_8_R3.PacketPlayOutPosition;
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -73,7 +72,7 @@ public class BlinkCounter {
         }
     }
 
-    public boolean onPacket(Player player, WrapperPlayClientPlayerFlying p) {
+    public boolean onPacket(Player player, PacketPlayInFlying p) {
         if (!cfg.enabled) return false;
         if (cfg.opBypass && player.isOp()) return false;
 
@@ -84,11 +83,10 @@ public class BlinkCounter {
         long now = System.currentTimeMillis();
 
         if (now < d.damageImmuneUntil) {
-            if (p.hasPositionChanged()) {
-                Location loc = p.getLocation();
-                d.lastLegalX = loc.getX();
-                d.lastLegalY = loc.getY();
-                d.lastLegalZ = loc.getZ();
+            if(p.g()) {
+                d.lastLegalX = p.a();
+                d.lastLegalY = p.b();
+                d.lastLegalZ = p.c();
                 d.lastPacketTime = now;
                 d.initialized = true;
                 d.fastPacketCount = 0;
@@ -96,7 +94,7 @@ public class BlinkCounter {
             return false;
         }
 
-        if (!p.hasPositionChanged()) return false;
+        if (!p.g()) return false;
 
         long gap = now - d.lastPacketTime;
 
@@ -110,20 +108,18 @@ public class BlinkCounter {
                 return true;
             }
             d.lastPacketTime = now;
-            Location loc = p.getLocation();
-            d.lastLegalX = loc.getX();
-            d.lastLegalY = loc.getY();
-            d.lastLegalZ = loc.getZ();
+            d.lastLegalX = p.a();
+            d.lastLegalY = p.b();
+            d.lastLegalZ = p.c();
             d.initialized = true;
             d.fastPacketCount = 0;
             return false;
         }
 
         if (!d.initialized) {
-            Location loc = p.getLocation();
-            d.lastLegalX = loc.getX();
-            d.lastLegalY = loc.getY();
-            d.lastLegalZ = loc.getZ();
+            d.lastLegalX = p.a();
+            d.lastLegalY = p.b();
+            d.lastLegalZ = p.c();
             d.lastPacketTime = now;
             d.initialized = true;
             d.fastPacketCount = 0;
@@ -143,13 +139,13 @@ public class BlinkCounter {
                 d.lastPunishTime = now;
                 d.blockActionsUntil = now + cfg.blockActionMs;
 
-                WrapperPlayServerPlayerPositionAndLook s08 = new WrapperPlayServerPlayerPositionAndLook(
-                        new Vector3d(d.lastLegalX, d.lastLegalY, d.lastLegalZ),
+                PacketPlayOutPosition s08 = new PacketPlayOutPosition(
+                        d.lastLegalX, d.lastLegalY, d.lastLegalZ,
                         player.getLocation().getYaw(),
                         player.getLocation().getPitch(),
-                        (byte) 0, 0
+                        Collections.emptySet()          // flags = 0,全部是絕對座標
                 );
-                PacketEvents.getAPI().getPlayerManager().sendPacket(player, s08);
+                ((CraftPlayer) player).getHandle().playerConnection.sendPacket(s08);
 
                 if (cfg.debug) {
                     System.out.println("[BlinkGuard] CAUGHT BLINK BURST for " + player.getName()
@@ -174,10 +170,9 @@ public class BlinkCounter {
             return true;
         }
 
-        Location loc = p.getLocation();
-        d.lastLegalX = loc.getX();
-        d.lastLegalY = loc.getY();
-        d.lastLegalZ = loc.getZ();
+        d.lastLegalX = p.a();
+        d.lastLegalY = p.b();
+        d.lastLegalZ = p.c();
         return false;
     }
 

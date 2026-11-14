@@ -1,4 +1,4 @@
-package top.nontage.blinkGuard;
+package top.speedcubing.antiblink;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;

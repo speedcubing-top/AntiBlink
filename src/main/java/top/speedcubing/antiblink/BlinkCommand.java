@@ -1,4 +1,4 @@
-package top.nontage.blinkGuard;
+package top.speedcubing.antiblink;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

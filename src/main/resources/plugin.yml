@@ -1,10 +1,9 @@
 name: BlinkGuard
 version: 1.0.0
-main: top.nontage.blinkGuard.BlinkGuardPlugin
+main: top.speedcubing.blinkguard.BlinkGuardPlugin
 api-version: 1.8
 author: nontage
 description: Counter Blink via S08 correction
-depend: [packetevents]
 commands:
   acblink:
     description: BlinkGuard admin command

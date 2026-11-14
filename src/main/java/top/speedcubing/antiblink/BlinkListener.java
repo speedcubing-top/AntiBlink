@@ -1,4 +1,4 @@
-package top.nontage.blinkGuard;
+package top.speedcubing.antiblink;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
