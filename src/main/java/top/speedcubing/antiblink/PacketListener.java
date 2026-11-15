@@ -54,7 +54,7 @@ public class PacketListener {
 
             if (counter.cfg != null && counter.cfg.debug) {
                 String name = packet instanceof PacketPlayInBlockPlace ? "block-place" : packet instanceof PacketPlayInBlockDig ? "block-dig" : "use-entity";
-                System.out.println("[BlinkGuard] Blocked action (" + name + ") from punished player " + player.getName());
+                System.out.println("[AntiBlink] Blocked action (" + name + ") from punished player " + player.getName());
             }
         } catch (Exception ignored) {
         }

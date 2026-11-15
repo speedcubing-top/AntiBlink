@@ -104,7 +104,7 @@ public class BlinkCounter {
         if (now < d.immuneUntil) {
             if (gap < currentGapThreshold && d.lastPacketTime != 0L) {
                 if (cfg.debug)
-                    System.out.println("[BlinkGuard] Cancelled burst during teleport immunity for " + player.getName());
+                    System.out.println("[AntiBlink] Cancelled burst during teleport immunity for " + player.getName());
                 return true;
             }
             d.lastPacketTime = now;
@@ -148,16 +148,16 @@ public class BlinkCounter {
                 ((CraftPlayer) player).getHandle().playerConnection.sendPacket(s08);
 
                 if (cfg.debug) {
-                    System.out.println("[BlinkGuard] CAUGHT BLINK BURST for " + player.getName()
+                    System.out.println("[AntiBlink] CAUGHT BLINK BURST for " + player.getName()
                             + " (gap=" + gap + "ms, Count=" + d.fastPacketCount
                             + ", TPS=" + String.format("%.1f", currentTps) + ")");
                 }
 
                 if (cfg.staffAlert && now - d.lastAlertTime > 2000) {
                     d.lastAlertTime = now;
-                    String alertMsg = "§8[§cBlinkGuard§8] §e" + player.getName() + " §7failed §cBlink §7(gap: " + gap + "ms)";
+                    String alertMsg = "§8[§cAntiBlink§8] §e" + player.getName() + " §7failed §cBlink §7(gap: " + gap + "ms)";
                     for (Player staff : Bukkit.getOnlinePlayers()) {
-                        if (staff.hasPermission("blinkguard.alerts")) {
+                        if (staff.hasPermission("antiblink.alerts")) {
                             staff.sendMessage(alertMsg);
                         }
                     }

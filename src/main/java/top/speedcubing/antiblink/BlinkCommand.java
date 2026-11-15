@@ -22,7 +22,7 @@ public class BlinkCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (!sender.hasPermission("blinkguard.admin")) {
+        if (!sender.hasPermission("antiblink.admin")) {
             sender.sendMessage("§cNo permission.");
             return true;
         }
@@ -35,7 +35,7 @@ public class BlinkCommand implements CommandExecutor, TabCompleter {
         switch (args[0].toLowerCase()) {
             case "reload":
                 configManager.load();
-                sender.sendMessage("§a[BlinkGuard] Config reloaded.");
+                sender.sendMessage("§a[AntiBlink] Config reloaded.");
                 return true;
 
             case "set":
@@ -44,15 +44,15 @@ public class BlinkCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
                 if (configManager.set(args[1], args[2])) {
-                    sender.sendMessage("§a[BlinkGuard] Set §e" + args[1] + " §ato §e" + args[2]);
+                    sender.sendMessage("§a[AntiBlink] Set §e" + args[1] + " §ato §e" + args[2]);
                 } else {
-                    sender.sendMessage("§c[BlinkGuard] Unknown key or invalid value: " + args[1]);
+                    sender.sendMessage("§c[AntiBlink] Unknown key or invalid value: " + args[1]);
                 }
                 return true;
 
             case "status":
                 sender.sendMessage("§8§m-----------------------");
-                sender.sendMessage("§6BlinkGuard Status");
+                sender.sendMessage("§6AntiBlink Status");
                 sender.sendMessage("§7Enabled: §f" + configManager.enabled);
                 sender.sendMessage("§7Burst Gap: §f" + configManager.burstGapMs + "ms");
                 sender.sendMessage("§7Burst Count: §f" + configManager.burstCount);

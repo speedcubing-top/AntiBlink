@@ -4,4 +4,4 @@ main: top.speedcubing.antiblink.AntiBlinkPlugin
 commands:
   acblink:
     usage: /acblink <reload|set|status>
-    permission: blinkguard.admin
+    permission: antiblink.admin

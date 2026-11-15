@@ -19,6 +19,6 @@ public class AntiBlinkPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        getLogger().info("BlinkGuard disabled.");
+        getLogger().info("AntiBlink disabled.");
     }
 }
